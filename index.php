@@ -1,10 +1,13 @@
 <?php
     session_start();
     if (!isset($_SESSION['data'])||isset($_POST['random'])) {
-        $random = range(1, 30);
+        session_destroy();
+        session_start();
+        $random = range(1, 50);
         shuffle($random );
         $data_1 = array_slice($random ,0,10);
         $data_2 = array_slice($random ,11,20);
+
         sort($data_1);
         sort($data_2);
 
@@ -24,12 +27,26 @@
         ); 
         // sort($random);
         $_SESSION["data"] = $mydata;
+        $_SESSION["data_1"] = $data_1;
+        $_SESSION["data_2"] = $data_2;
 
         header("Location: index.php");
     }
-    
-
     $data = $_SESSION["data"];
+    $data_1 = $_SESSION["data_1"];
+    $data_2 = $_SESSION["data_2"];
+
+    // // render
+    // if (isset($_POST['render'])) {
+            
+    //     if ($_POST['cluster'] < 1) {
+    //         echo '<script> alert("cluster harus nilai > 0 !!!") </script>';
+    //     }else{
+            
+    //     }
+
+    //     // header("Location: index.php");
+    // }
 ?>
 
 <!doctype html>
@@ -51,15 +68,15 @@
         <div id="input" class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    <form>
+                    <form action="index.php" method="POST">
                         <div class="form-row">
                             <div class="form-group col-sm-2">
                                 <label>K-Means</label>
-                                <input type="number" class="form-control form-control-sm" required>
+                                <input type="number" name="cluster" class="form-control form-control-sm" required>
                             </div>
                             <div class="form-group col-sm-2">
                                 <label>Clustering</label>
-                                <input type="submit" class="btn btn-primary btn-sm" value="Submit">
+                                <input type="submit" name="render" class="btn btn-primary btn-sm" value="Submit">
                             </div>
                         </div>
                     </form>
@@ -104,6 +121,24 @@
         </div>
     </div>
 
+    <?php
+    // render
+        if (isset($_POST['render'])) {
+            if ($_POST['cluster'] < 2) {
+                echo '<script> alert("cluster harus nilai > 1 !!!") </script>';
+            }else{
+                // K
+                $cluster = $_POST['cluster'];
+
+                $keys = array_rand( $data_1, $cluster ); 
+                
+                for ($i=0; $i < $cluster ; $i++) { 
+                    echo $data_1[$keys[$i]];  
+                }
+
+            } 
+        }           
+    ?>
 
 
     <!-- Optional JavaScript -->
