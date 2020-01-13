@@ -40,15 +40,18 @@
             <form>
                 <div class="form-row">
                     <div class="form-group col-sm-1">
-                        <label>Cluster</label>
+                        <label>K-Means</label>
                         <input type="number" class="form-control form-control-sm" required>
                     </div>
+                    <div class="form-group col-sm-1">
+                        <label>Clustering</label>
+                        <input type="submit" class="btn btn-primary btn-sm" value="Submit">
+                    </div>
                 </div>
-                <input type="submit" class="btn btn-primary btn-sm" value="Submit">
             </form>
         </div>
-        <div id="input-random" class="container">
-            <table class="table table-borderless text-center">
+        <div id="input-random" class="container mt-3">
+            <table class="table table-bordered text-center">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
