@@ -1,23 +1,35 @@
 <?php
-    $random = range(1, 100);
-    shuffle($random );
+    session_start();
+    if (!isset($_SESSION['data'])||isset($_POST['random'])) {
+        $random = range(1, 30);
+        shuffle($random );
+        $data_1 = array_slice($random ,0,10);
+        $data_2 = array_slice($random ,11,20);
+        sort($data_1);
+        sort($data_2);
 
+        $mydata = array(
+            // Default key for each will 
+            // start from 0 
+            array($data_1[0],$data_2[0]),
+            array($data_1[1],$data_2[1]),
+            array($data_1[2],$data_2[2]),
+            array($data_1[3],$data_2[3]),
+            array($data_1[4],$data_2[4]),
+            array($data_1[5],$data_2[5]),
+            array($data_1[6],$data_2[6]),
+            array($data_1[7],$data_2[7]),
+            array($data_1[8],$data_2[8]),
+            array($data_1[9],$data_2[9]),
+        ); 
+        // sort($random);
+        $_SESSION["data"] = $mydata;
 
-    $data = array(
-        // Default key for each will 
-        // start from 0 
-        array_slice($random ,0,2),
-        array_slice($random ,3,5),
-        array_slice($random ,6,8),
-        array_slice($random ,9,11),
-        array_slice($random ,12,14),
-        array_slice($random ,15,17),
-        array_slice($random ,18,20),
-        array_slice($random ,21,23),
-        array_slice($random ,24,26),
-        array_slice($random ,27,29)
-    ); 
-    // print_r($data);
+        header("Location: index.php");
+    }
+    
+
+    $data = $_SESSION["data"];
 ?>
 
 <!doctype html>
@@ -37,18 +49,32 @@
 <body>
     <div id="wrapper" class="container-fluid mt-5 mb-5">
         <div id="input" class="container">
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-sm-1">
-                        <label>K-Means</label>
-                        <input type="number" class="form-control form-control-sm" required>
-                    </div>
-                    <div class="form-group col-sm-1">
-                        <label>Clustering</label>
-                        <input type="submit" class="btn btn-primary btn-sm" value="Submit">
-                    </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-sm-2">
+                                <label>K-Means</label>
+                                <input type="number" class="form-control form-control-sm" required>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Clustering</label>
+                                <input type="submit" class="btn btn-primary btn-sm" value="Submit">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+                <div class="col-sm-6">
+                    <form action="index.php" method="POST">
+                        <div class="form-row">
+                            <div class="form-group col-sm-2 offset-sm-10">
+                                <label></label>
+                                <input type="submit" name="random" class="btn btn-primary btn-sm" value="random">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div id="input-random" class="container mt-3">
             <table class="table table-bordered text-center">
