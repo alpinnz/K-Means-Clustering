@@ -105,22 +105,31 @@
                     // K
                     $cluster = $_POST['cluster'];
 
-                    $keys = array_rand( $data_1, $cluster ); 
-
-                    $K = range(1, 10);
+                    // random 
+                    $K = range(0, 9);
                     shuffle($K );
                     $K = array_slice($K ,0,$cluster);
-
                     sort($K);
 
                     $_SESSION["K"] = $K;
 
+                    $temp = array();
+                    $result = array();
+                    for ($j=0; $j < count($data_1) ; $j++) { 
+                        for ($i=0; $i < count($K); $i++) { 
+                            $result[$i] = sqrt( pow ( ( $data_1[0] - $data_1[$K[$i]] ) , 2) + pow ( ( $data_2[0] - $data_2[$K[$i]] ) , 2 ) );
+                        }
+                        array_push($temp, $result);
+                        $result=null;
+                    }
                     
+                    
+                    print_r($temp);
 
+                    echo join(" ",$temp);
+                    
                 } 
             }     
-            
-            
         ?>
 
         <div id="input-random" class="container mt-3">
@@ -141,7 +150,7 @@
                             <tr>
                                 <th scope="row"><?php echo $i+1; ?></th>
                                 <td>K-<?php echo $i+1; ?></td>
-                                <td><?php echo $K[$i]; ?></td>
+                                <td><?php echo $K[$i]+1; ?></td>
                             </tr>
                             <?php
                             }
@@ -176,7 +185,41 @@
                     </table>
                 </div>                
             </div>
-            
+        </div>
+        <div class="output">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td scope="row"></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td scope="row"></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="container">
+                        
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
