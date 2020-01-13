@@ -95,6 +95,8 @@
         </div>
 
         <?php
+            $K = array();
+
         // render
             if (isset($_POST['render'])) {
                 if ($_POST['cluster'] < 2) {
@@ -108,18 +110,17 @@
                     $K = range(1, 10);
                     shuffle($K );
                     $K = array_slice($K ,0,$cluster);
+
                     sort($K);
 
-                    $KCluster = array();
+                    $_SESSION["K"] = $K;
 
-                    for ($i=0; $i < $cluster ; $i++) { 
-                        $KCluster[$i] = $data_1[$keys[$i]];  
-                    }
-
-                    print_r($K);
+                    
 
                 } 
-            }           
+            }     
+            
+            
         ?>
 
         <div id="input-random" class="container mt-3">
@@ -129,20 +130,18 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">data_1</th>
-                                <th scope="col">data_2</th>
                                 <th scope="col">claster</th>
+                                <th scope="col">index data</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                                for ($i=0; $i < count($data) ; $i++) { 
+                                for ($i=0; $i < count($K) ; $i++) { 
                             ?>
                             <tr>
                                 <th scope="row"><?php echo $i+1; ?></th>
-                                <td><?php echo $data[$i][0]; ?></td>
-                                <td><?php echo $data[$i][1]; ?></td>
-                                <td>?</td>
+                                <td>K-<?php echo $i+1; ?></td>
+                                <td><?php echo $K[$i]; ?></td>
                             </tr>
                             <?php
                             }
