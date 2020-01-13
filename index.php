@@ -131,10 +131,14 @@
                 $cluster = $_POST['cluster'];
 
                 $keys = array_rand( $data_1, $cluster ); 
-                
+
+                $KCluster = array();
+
                 for ($i=0; $i < $cluster ; $i++) { 
-                    echo $data_1[$keys[$i]];  
+                    $KCluster[$i] = $data_1[$keys[$i]];  
                 }
+
+                print_r($KCluster);
 
             } 
         }           
