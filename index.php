@@ -9,7 +9,7 @@
         $data_2 = array_slice($random ,11,20);
 
         sort($data_1);
-        sort($data_2);
+        // sort($data_2);
 
         $mydata = array(
             // Default key for each will 
@@ -67,10 +67,10 @@
     <div id="wrapper" class="container-fluid mt-5 mb-5">
         <div id="input" class="container">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-5 offset-sm-1">
                     <form action="index.php" method="POST">
                         <div class="form-row">
-                            <div class="form-group col-sm-2">
+                            <div class="form-group col-sm-2 offset-sm-2">
                                 <label>K-Means</label>
                                 <input type="number" name="cluster" class="form-control form-control-sm" required>
                             </div>
@@ -81,7 +81,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-5 offset-sm-1">
                     <form action="index.php" method="POST">
                         <div class="form-row">
                             <div class="form-group col-sm-2 offset-sm-10">
@@ -93,56 +93,95 @@
                 </div>
             </div>
         </div>
-        <div id="input-random" class="container mt-3">
-            <table class="table table-bordered text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">data_1</th>
-                        <th scope="col">data_2</th>
-                        <th scope="col">claster</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        for ($i=0; $i < count($data) ; $i++) { 
-                    ?>
-                    <tr>
-                        <th scope="row"><?php echo $i+1; ?></th>
-                        <td><?php echo $data[$i][0]; ?></td>
-                        <td><?php echo $data[$i][1]; ?></td>
-                        <td>?</td>
-                    </tr>
-                    <?php
+
+        <?php
+        // render
+            if (isset($_POST['render'])) {
+                if ($_POST['cluster'] < 2) {
+                    echo '<script> alert("cluster harus nilai > 1 !!!") </script>';
+                }else{
+                    // K
+                    $cluster = $_POST['cluster'];
+
+                    $keys = array_rand( $data_1, $cluster ); 
+
+                    $K = range(1, 10);
+                    shuffle($K );
+                    $K = array_slice($K ,0,$cluster);
+                    sort($K);
+
+                    $KCluster = array();
+
+                    for ($i=0; $i < $cluster ; $i++) { 
+                        $KCluster[$i] = $data_1[$keys[$i]];  
                     }
-                    ?>
-                </tbody>
-            </table>
+
+                    print_r($K);
+
+                } 
+            }           
+        ?>
+
+        <div id="input-random" class="container mt-3">
+            <div class="row">
+                <div class="col-sm-4 offset-sm-1">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">data_1</th>
+                                <th scope="col">data_2</th>
+                                <th scope="col">claster</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                for ($i=0; $i < count($data) ; $i++) { 
+                            ?>
+                            <tr>
+                                <th scope="row"><?php echo $i+1; ?></th>
+                                <td><?php echo $data[$i][0]; ?></td>
+                                <td><?php echo $data[$i][1]; ?></td>
+                                <td>?</td>
+                            </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4 offset-sm-2">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">data_1</th>
+                                <th scope="col">data_2</th>
+                                <th scope="col">claster</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                for ($i=0; $i < count($data) ; $i++) { 
+                            ?>
+                            <tr>
+                                <th scope="row"><?php echo $i+1; ?></th>
+                                <td><?php echo $data[$i][0]; ?></td>
+                                <td><?php echo $data[$i][1]; ?></td>
+                                <td>?</td>
+                            </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>                
+            </div>
+            
         </div>
     </div>
 
-    <?php
-    // render
-        if (isset($_POST['render'])) {
-            if ($_POST['cluster'] < 2) {
-                echo '<script> alert("cluster harus nilai > 1 !!!") </script>';
-            }else{
-                // K
-                $cluster = $_POST['cluster'];
-
-                $keys = array_rand( $data_1, $cluster ); 
-
-                $KCluster = array();
-
-                for ($i=0; $i < $cluster ; $i++) { 
-                    $KCluster[$i] = $data_1[$keys[$i]];  
-                }
-
-                print_r($KCluster);
-
-            } 
-        }           
-    ?>
+    
 
 
     <!-- Optional JavaScript -->
